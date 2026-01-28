@@ -1,6 +1,5 @@
 # MessageMind: AI-Powered Ticket Triage
 
-## Objective
 A small full-stack app that triages a support message using an LLM and stores the result in PostgreSQL.
 
 ## Tech stack
