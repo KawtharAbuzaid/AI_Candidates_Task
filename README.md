@@ -20,19 +20,23 @@ Implement:
 
 ### The result
 
+[The result](screenshots/result.png)
+
 ### Failure Case 1: No text was entered.
 
 ![No text was entered](screenshots/No_Text.png)
 
 ### Failure Case 2: The text is too long.
 
-![The text is too long](screenshots/too long.png)
+![The text is too long](screenshots/too_long.png)
 
 ### Low Confidence
 
 ![Need human interaction](screenshots/low_confidence.png)
 
 ### The prompt
+
+
 
 ### Documentation
 - Update this README with decisions and tradeoffs
