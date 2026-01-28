@@ -20,7 +20,7 @@ Implement:
 
 ### The result
 
-[The result](screenshots/result.png)
+[The result](screenshots/the_result.png)
 
 ### Failure Case 1: No text was entered.
 
