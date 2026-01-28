@@ -10,7 +10,7 @@ A small full-stack app that triages a support message using an LLM and stores th
 - AI: OpenAI.
 
 ### Frontend
-Implement:
+Contains:
 - Text area input
 - The result
 - The last 10 items
@@ -20,60 +20,50 @@ Implement:
 
 ### The result
 
-[The result](screenshots/the_result.png)
+![The result](screenshots/the_result.png)
 
 ### Failure Case 1: No text was entered.
+
+The system rejects any empty input.
 
 ![No text was entered](screenshots/No_Text.png)
 
 ### Failure Case 2: The text is too long.
 
+The system rejects text longer than 4000 chars.
+
 ![The text is too long](screenshots/too_long.png)
 
 ### Low Confidence
 
+If confidence < 0.6, The system suggests human review.
+
 ![Need human interaction](screenshots/low_confidence.png)
+
+### The Last 10 items
+
+The system display the last 10 items, and keep the others in the DB.
+
+![Need human interaction](screenshots/recent.png)
 
 ### The prompt
 
-
-
-### Documentation
-- Update this README with decisions and tradeoffs
-- Add a short section describing:
-  - Prompt design
-  - Known failure cases
-
-### Demo
-5 minutes:
-- run locally
-- paste input
-- show output
-- show recent items
-
-## API contract
-
-### POST /triage
-Input:
-```json
-{ "text": "..." }
 ```
+const prompt = `
+You are an AI support triage system.
 
-Output:
-```json
-{
-  "title": "string",
-  "category": "billing | technical | account | other",
-  "priority": "low | medium | high",
-  "summary": "string",
-  "suggested_response": "string",
-  "confidence": 0.0
-}
+Return valid JSON with these keys:
+title, category, priority, summary, suggested_response, confidence
+
+Rules:
+- category: billing | technical | account | refund | other
+- priority: low | medium | high | urgent
+- confidence: number between 0 and 1
+- No extra text.
+
+Customer message:
+"""${inputText}"""
+`.trim();
 ```
-
-Guardrails:
-- Reject empty input
-- Reject text longer than 4000 chars
-- If confidence < 0.6, keep the output but make it clear it needs human review
 
 ## By: Kawthar Abuzaid
