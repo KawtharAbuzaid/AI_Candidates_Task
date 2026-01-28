@@ -45,7 +45,12 @@ The system display the last 10 items, and keep the others in the DB.
 
 ![Need human interaction](screenshots/recent.png)
 
-### The prompt
+### 🧩 Prompt Design
+
+The prompt is designed as required:
+- It provides: title, category, priority, summary, suggested response, and confidence.
+- Encourage structured and concise output, with no extra text..
+- Make sure that the output is JSON based to meet the app specifications.
 
 ```
 const prompt = `
@@ -64,5 +69,15 @@ Customer message:
 """${inputText}"""
 `.trim();
 ```
+
+## 🧠 Design Decisions & Tradeoffs
+
+- The frontend is one simple page focused on functionality
+  - **Reason:** The goal is to clearly demonstrate functionality and reasoning.
+  - **Tradeoff:** The UI could be visually enhanced with more time.
+
+- The application uses OpenAI API as an LLM provider.
+  - **Reason:** OpenAI API is fast and easy to implement, and suitable for a small task. and performs well for structured JSON-based responses.
+  - **Tradeoff:** It needs credits to run.
 
 ## By: Kawthar Abuzaid
