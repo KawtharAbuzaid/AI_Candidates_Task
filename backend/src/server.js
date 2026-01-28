@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+dotenv.config({ path: process.cwd() + "/.env.example" });
+
 import triageRouter from "./routes/triage.js";
 
 dotenv.config();

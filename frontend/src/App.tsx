@@ -32,7 +32,6 @@ export default function App() {
 
   useEffect(() => {
     loadRecent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function onSubmit(e: React.FormEvent) {
@@ -51,7 +50,7 @@ export default function App() {
       const res = await fetch(`${API_BASE}/triage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: trimmed }),
+        body: JSON.stringify({ inputText: trimmed }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -70,46 +69,125 @@ export default function App() {
   }
 
   return (
-    <div style={{ maxWidth: 900, margin: "40px auto", padding: 16, fontFamily: "system-ui" }}>
-      <h1>AI Support Ticket Triage</h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        width: "100%",
+        background: "#0f1115",
+        color: "#eaeaea",
+        fontFamily: "system-ui",
+      }}
+    >
+      {/* Centered container */}
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          padding: "60px 24px",
+        }}
+      >
+        <h1 style={{ fontSize: 36, margin: 0, marginBottom: 20 }}>
+          MessageMind: AI-Powered Support Ticket Triage
+        </h1>
 
-      <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
-        <textarea
-          rows={8}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Paste a support message here..."
-          style={{ padding: 12, fontSize: 14 }}
-        />
-        <button disabled={loading} style={{ width: 160, padding: "10px 12px" }}>
-          {loading ? "Running..." : "Triage"}
-        </button>
-      </form>
+        <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
+          <textarea
+            rows={8}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Paste a support message here..."
+            style={{
+              padding: 14,
+              fontSize: 14,
+              borderRadius: 12,
+              background: "#151821",
+              color: "#eaeaea",
+              border: "1px solid #2a2f3a",
+              resize: "vertical",
+            }}
+          />
 
-      {error && <p style={{ color: "crimson" }}>{error}</p>}
+          <button
+            disabled={loading}
+            style={{
+              width: 160,
+              padding: "12px 14px",
+              borderRadius: 10,
+              border: "none",
+              background: loading ? "#333" : "#6c7cff",
+              color: "#fff",
+              fontWeight: 600,
+              cursor: loading ? "not-allowed" : "pointer",
+            }}
+          >
+            {loading ? "Running..." : "Triage"}
+          </button>
+        </form>
 
-      {result && (
-        <div style={{ marginTop: 20, padding: 12, border: "1px solid #ddd", borderRadius: 8 }}>
-          <h2 style={{ marginTop: 0 }}>{result.title}</h2>
-          <p><b>Category:</b> {result.category}</p>
-          <p><b>Priority:</b> {result.priority}</p>
-          <p><b>Confidence:</b> {result.confidence}</p>
-          <p><b>Summary:</b> {result.summary}</p>
-          <p><b>Suggested response:</b> {result.suggested_response}</p>
-        </div>
-      )}
+        {error && (
+          <p style={{ marginTop: 10, color: "#ff6b6b" }}>{error}</p>
+        )}
 
-      <h2 style={{ marginTop: 28 }}>Recent</h2>
-      <div style={{ display: "grid", gap: 10 }}>
-        {recent.map((r, idx) => (
-          <div key={r.id ?? idx} style={{ padding: 12, border: "1px solid #eee", borderRadius: 8 }}>
-            <div style={{ fontWeight: 600 }}>{r.result_json?.title ?? r.title ?? "Untitled"}</div>
-            <div style={{ fontSize: 13, opacity: 0.8 }}>
-              {r.result_json?.category ?? r.category ?? "other"} , {r.result_json?.priority ?? r.priority ?? "medium"}
-            </div>
+        {result && (
+          <div
+            style={{
+              marginTop: 24,
+              padding: 16,
+              borderRadius: 14,
+              background: "#151821",
+              border: "1px solid #2a2f3a",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+            }}
+          >
+            <h2 style={{ marginTop: 0 }}>{result.title}</h2>
+            <p>
+              <b>Category:</b> {result.category}
+            </p>
+            <p>
+              <b>Priority:</b> {result.priority}
+            </p>
+            <p>
+              <b>Confidence:</b> {result.confidence}
+            </p>
+            <p>
+              <b>Summary:</b> {result.summary}
+            </p>
+            <p>
+              <b>Suggested response:</b> {result.suggested_response}
+            </p>
           </div>
-        ))}
-        {recent.length === 0 && <div style={{ opacity: 0.7 }}>No items yet.</div>}
+        )}
+
+        <h2 style={{ marginTop: 36, marginBottom: 14 }}>Recent</h2>
+
+        <div style={{ display: "grid", gap: 12 }}>
+          {recent.map((r, idx) => {
+            const rj = r.ResultJson ?? r.result_json ?? r.resultJson;
+
+            return (
+              <div
+                key={r.TriageID ?? r.id ?? idx}
+                style={{
+                  padding: 14,
+                  borderRadius: 12,
+                  background: "#151821",
+                  border: "1px solid #2a2f3a",
+                }}
+              >
+                <div style={{ fontWeight: 600 }}>
+                  {rj?.title ?? "Untitled"}
+                </div>
+                <div style={{ fontSize: 13, opacity: 0.8 }}>
+                  {(rj?.category ?? "other")} , {(rj?.priority ?? "medium")}
+                </div>
+              </div>
+            );
+          })}
+
+          {recent.length === 0 && (
+            <div style={{ opacity: 0.7 }}>No items yet.</div>
+          )}
+        </div>
       </div>
     </div>
   );
