@@ -77,7 +77,7 @@ Customer message:
   - **Tradeoff:** The UI could be visually enhanced with more time.
 
 - The application uses OpenAI API as an LLM provider.
-  - **Reason:** OpenAI API is fast and easy to implement, and suitable for a small task. and performs well for structured JSON-based responses.
+  - **Reason:** OpenAI API is fast and easy to implement, and suitable for a small task. And performs well for structured JSON-based responses.
   - **Tradeoff:** It needs credits to run.
 
 ## By: Kawthar Abuzaid
