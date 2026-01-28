@@ -8,7 +8,7 @@ A small full-stack app that triages a support message using an LLM and stores th
 - Database: PostgreSQL (local)
 - AI: OpenAI API.
 
-### Frontend
+## Frontend
 Contains:
 - Text area input
 - The result
@@ -45,7 +45,7 @@ The system display the last 10 items, and keep the others in the DB.
 
 ![Need human interaction](screenshots/recent.png)
 
-### 🧩 Prompt Design
+## 🧩 Prompt Design
 
 The prompt is designed as required:
 - It provides: title, category, priority, summary, suggested response, and confidence.
