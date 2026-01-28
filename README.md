@@ -6,7 +6,7 @@ A small full-stack app that triages a support message using an LLM and stores th
 - Frontend: React (Vite)
 - Backend: Node.js, Express.js
 - Database: PostgreSQL (local)
-- AI: OpenAI.
+- AI: OpenAI API.
 
 ### Frontend
 Contains:
